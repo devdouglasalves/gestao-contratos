@@ -103,20 +103,29 @@ public abstract class Contract {
 
     public abstract void validate();
 
+    public static String titleCsv() {
+        return "Nome,Tipo,Data inicio,Data fim,Salario";
+    }
+
+    public String exportCsv() {
+        return getEmployeeName() + "," + getContractType()+ "," + dtf.format(getStartDate()) + "," + dtf.format(getEndDate()) + "," + String.format("%.2f",getSalary());
+    }
+
     public String toString() {
         StringBuilder sb = new StringBuilder();
 
-        sb.append(employeeName + "\n");
-        sb.append("Tipo: " + contractType + "\n");
+        sb.append(getEmployeeName() + "\n");
+        sb.append("Tipo: " + getContractType() + "\n");
         sb.append("Duração: " + durationInMonths() + " meses\n");
-        sb.append("Início: " + dtf.format(startDate) + "\n");
-        sb.append("Término: " + dtf.format(endDate) + "\n");
+        sb.append("Início: " + dtf.format(getStartDate()) + "\n");
+        sb.append("Término: " + dtf.format(getEndDate()) + "\n");
+
         if (durationInMonths() >= 12) {
             sb.append("Bônus (Tempo de empresa): R$ " +String.format("%.2f%n",BONUS));
-            sb.append("Salário mensal: R$ " + String.format("%.2f", salary + BONUS)+ "\n");
+            sb.append("Salário mensal: R$ " + String.format("%.2f", getSalary() + BONUS)+ "\n");
         }
         else {
-            sb.append("Salário mensal: R$ " + String.format("%.2f", salary)+ "\n");
+            sb.append("Salário mensal: R$ " + String.format("%.2f", getSalary())+ "\n");
         }
         sb.append("Valor total do contrato: R$ " + String.format("%.2f", totalValue())+ "\n");
 
